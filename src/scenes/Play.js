@@ -44,6 +44,33 @@ class Play extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('explosion', {start: 0, end: 9, first: 0}),
             frameRate: 30
         });
+
+        // initialize score
+        this.p1Score = 0;
+
+        // display score
+        let scoreConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 100
+        }
+        this.scoreLeft = this.add.text(borderUISize + borderPadding, borderUISize + borderPadding*2, this.p1Score, scoreConfig);
+        
+        // 60-sec play clock
+        scoreConfig.fixedWidth = 0;
+        this.clock = this.time.delayedCall(1000, () => {
+            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER',
+            scoreConfig). setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart', scoreConfig).setOrigin(0.5);
+        }, null, this);
+
     }
 
     update(){
@@ -94,5 +121,8 @@ class Play extends Phaser.Scene {
             ship.alpha = 1;
             boom.destroy();
         });
+        // score add and repaint
+        this.p1Score += ship.points;
+        this.scoreLeft.text = this.p1Score;
     }
 }
