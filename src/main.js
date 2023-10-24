@@ -1,7 +1,8 @@
 // Igor Bessa
 // TITLE TBD 
 // ___ hours
-// Mod List: Power Ups (5pts), Kill streak counter (3pts), Time remaining display (3pts), Time increasing with kills (5pts),
+// Mod List: 2 Power Ups (5pts), Time increasing with kills (5pts), Kill streak counter (3pts), Time remaining display (3pts), 
+// Looping background music (1pt), New scrolling background (1pt)
 // 
 
 let config = {

@@ -66,7 +66,7 @@ class Play extends Phaser.Scene {
         // GAME OVER flag
         this.gameOver = false;
 
-        // 60-sec play clock
+        // play clock
         scoreConfig.fixedWidth = 0;
         this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER',
@@ -74,6 +74,22 @@ class Play extends Phaser.Scene {
             this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true;
         }, null, this);
+// new code -------------------------------------------------------------------------------------------------------------------------------------
+        // Display time
+        let timeConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 100
+        }
+        this.timeLeft = this.add.text(borderUISize + borderPadding*15, borderUISize + borderPadding*2, this.clock.number, timeConfig);
+// end new code ---------------------------------------------------------------------------------------------------------------------------------
 
     }
 
@@ -110,7 +126,12 @@ class Play extends Phaser.Scene {
             this.p1Rocket.reset();
             this.shipExplode(this.ship01);
         }
+
+        // time updating
+        this.timeLeft.text = this.clock.number;        
     }
+
+    
 
     checkCollision(rocket, ship){
         // simple AABB checking
@@ -140,5 +161,6 @@ class Play extends Phaser.Scene {
         this.p1Score += ship.points;
         this.scoreLeft.text = this.p1Score;
         this.sound.play('sfx_explosion');
+        // add time & repaint 
     }
 }
