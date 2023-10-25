@@ -14,6 +14,7 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+
         // place tile sprite
         this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
         // green UI background
@@ -89,6 +90,22 @@ class Play extends Phaser.Scene {
             fixedWidth: 100
         }
         this.timeLeft = this.add.text(borderUISize + borderPadding*15, borderUISize + borderPadding*2, this.clock.number, timeConfig);
+
+        // Display streak 
+        let streakConfig = {
+            fontFamily: 'Courier',
+            fontSize: '26px',
+            backgroundColor: '#F3B141',
+            color: '#843605',
+            align: 'left',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 150
+        }
+
+        this.streakText = this.add.text(borderUISize + borderPadding*30, borderUISize + borderPadding*2, "STREAK: " + streak, streakConfig)
 // end new code ---------------------------------------------------------------------------------------------------------------------------------
 
     }
@@ -128,7 +145,8 @@ class Play extends Phaser.Scene {
         }
 
         // time updating
-        this.timeLeft.text = this.clock.number;        
+        this.timeLeft.text = this.clock.number;  
+        this.streakText.text = "STREAK: " + streak;
     }
 
     
@@ -162,5 +180,8 @@ class Play extends Phaser.Scene {
         this.scoreLeft.text = this.p1Score;
         this.sound.play('sfx_explosion');
         // add time & repaint 
+
+        // add streak and repaint
+        streak += 1;
     }
 }
