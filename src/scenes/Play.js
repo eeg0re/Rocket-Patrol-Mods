@@ -72,12 +72,20 @@ class Play extends Phaser.Scene {
 
         // play clock
         scoreConfig.fixedWidth = 0;
-        this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
+        /*this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
             this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER',
             scoreConfig). setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true;
-        }, null, this);
+        }, null, this); 
+        */
+       this.clock = this.time.addEvent({
+            delay: game.settings.gameTimer, 
+            callback: this.decreaseTime(),
+            callbackScope: this,
+            repeat: 60
+       });
+
 // new code -------------------------------------------------------------------------------------------------------------------------------------
         // Display time
         let timeConfig = {
@@ -92,7 +100,7 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100
         }
-        this.timeLeft = this.add.text(borderUISize + borderPadding*15, borderUISize + borderPadding*2, this.clock.number, timeConfig);
+        // this.timeLeft = this.add.text(borderUISize + borderPadding*15, borderUISize + borderPadding*2, this.clock.number, timeConfig);
 
         // Display streak 
         let streakConfig = {
@@ -111,6 +119,10 @@ class Play extends Phaser.Scene {
         this.streakText = this.add.text(borderUISize + borderPadding*30, borderUISize + borderPadding*2, "STREAK: " + streak, streakConfig)
 // end new code ---------------------------------------------------------------------------------------------------------------------------------
 
+    }
+
+    decreaseTime(){
+        game.settings.gameTimer -= 1;
     }
 
     update(){
@@ -134,7 +146,7 @@ class Play extends Phaser.Scene {
             this.ship03.update();
 
             // time updating
-            this.timeLeft.text = this.clock.number;
+            //this.timeLeft.text = this.clock.number;
 
             // streak updating
             this.streakText.text = "STREAK: " + streak;

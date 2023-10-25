@@ -4,6 +4,22 @@ class Menu extends Phaser.Scene {
     }
 
     preload(){
+        // loading bar code provided by Prof. Nathan Altice
+        // code from Asset Bonanza repo on Github
+        // set up loading bar
+        // see: https://rexrainbow.github.io/phaser3-rex-notes/docs/site/loader/
+        let loading = this.add.graphics();
+        // see: https://photonstorm.github.io/phaser3-docs/Phaser.Loader.Events.html
+        this.load.on('progress', (value)=> {
+            loading.clear();                            // reset fill/line style
+            loading.fillStyle(0xFACADE, 1);             // (color, alpha)
+            loading.fillRect(20, 300, 600*value, 15);  // (x, y, width, height)
+        });
+        this.load.on('complete', ()=> {
+            loading.destroy();
+        });
+
+
         // load audio
         this.load.audio('sfx_select', './assets/blip_select12.wav');
         this.load.audio('sfx_explosion', './assets/explosion38.wav');
@@ -15,28 +31,6 @@ class Menu extends Phaser.Scene {
     }
     
     create() {
-        /*
-        let menuConfig = {
-            fontFamily: 'Courier',
-            fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
-            align: 'right',
-            padding: {
-                top: 5,
-                bottom: 5,
-            },
-            fixedWidth: 0
-        }
-        
-        // show menu text
-        this.add.text(game.config.width/2, game.config.height/2 - borderUISize - borderPadding, 'ROCKET PATROL', menuConfig).setOrigin(0.5);
-        this.add.text(game.config.width/2, game.config.height/2, 'Use <--> arrows to move & (F) to fire', menuConfig).setOrigin(0.5);
-        menuConfig.backgroundColor = '#00FF00';
-        menuConfig.color = '#000';
-        this.add.text(game.config.width/2, game.config.height/2 + borderUISize + borderPadding, 'Press <- for Novice or -> for Expert', menuConfig).setOrigin(0.5);
-        */
-
         this.menuScreen = this.add.tileSprite(0, 0, 640, 480, 'menu').setOrigin(0, 0);
         // define keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -70,7 +64,7 @@ class Menu extends Phaser.Scene {
             game.settings = {
                 spaceshipSpeed: 4,
                 gameTimer: 45000,
-                timeAdd: 500
+                timeAdd: 5000
             }
             this.sound.play('sfx_select');
             this.scene.start('playScene');
