@@ -7,6 +7,8 @@ class Play extends Phaser.Scene {
         // load images/tile sprites
         this.load.image('rocket', './assets/rocket.png');
         this.load.image('spaceship', './assets/spaceship.png');
+        //this.load.image('spaceship', './assets/Nairan - Battlecruiser - Base.png');
+
         this.load.image('starfield', './assets/starfield.png');
 
         // load spritesheet
@@ -17,6 +19,7 @@ class Play extends Phaser.Scene {
 
         // place tile sprite
         this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setOrigin(0, 0);
+
         // green UI background
         this.add.rectangle(0, borderUISize + borderPadding, game.config.width, borderUISize * 2, 0x00FF00).setOrigin(0,0);
         // white borders
@@ -121,6 +124,7 @@ class Play extends Phaser.Scene {
         }
 
         this.starfield.tilePositionX -= 4;
+
         if(!this.gameOver){
             // update rocket
             this.p1Rocket.update();
@@ -128,6 +132,19 @@ class Play extends Phaser.Scene {
             this.ship01.update();
             this.ship02.update();
             this.ship03.update();
+
+            // time updating
+            this.timeLeft.text = this.clock.number;
+
+            // streak updating
+            this.streakText.text = "STREAK: " + streak;
+
+            // if(streak % 7 == 3){ // spawn power up 1
+            //     spawnPower();
+            // } 
+            // if(streak % 7 == 6){ // spawn power up 2
+            //     spawnPower();
+            // }
         }
 
         // check collisions
@@ -143,10 +160,6 @@ class Play extends Phaser.Scene {
             this.p1Rocket.reset();
             this.shipExplode(this.ship01);
         }
-
-        // time updating
-        this.timeLeft.text = this.clock.number;  
-        this.streakText.text = "STREAK: " + streak;
     }
 
     
