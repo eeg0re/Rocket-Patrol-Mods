@@ -147,7 +147,8 @@ class Play extends Phaser.Scene {
 
             // time updating
             this.elapsed = this.clock.getElapsed();
-            this.timeLeft.text = this.elapsed;
+            this.remaining = (this.game.settings.gameTimer - this.elapsed)/1000; 
+            this.timeLeft.text = this.remaining;
 
             // streak updating
             this.streakText.text = "STREAK: " + streak;
