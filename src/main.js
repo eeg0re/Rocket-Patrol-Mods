@@ -8,6 +8,8 @@
 // New title Screen (3pts): Designed a new title screen using a pixel art editor, displays at the Menu scene
 // Couldn't get power ups working in time :(
 // Total points: 10
+// Citations: 
+// looping background music is from Fesliyan Studios, https://www.fesliyanstudios.com/royalty-free-music/downloads-c/8-bit-music/6
 
 let config = {
     type: Phaser.AUTO, 
