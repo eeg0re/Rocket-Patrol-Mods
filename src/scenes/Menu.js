@@ -37,10 +37,8 @@ class Menu extends Phaser.Scene {
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
         // initialize music
-        let songIsPlaying = false;
         let gameSong = this.sound.add('sfx_music');
         gameSong.loop = true;
-        
         if(songIsPlaying == false){
             songIsPlaying = true;
             gameSong.play();
@@ -48,6 +46,7 @@ class Menu extends Phaser.Scene {
     }
 
     update(){
+
         if(Phaser.Input.Keyboard.JustDown(keyLEFT)){
             // easy mode
             game.settings = {

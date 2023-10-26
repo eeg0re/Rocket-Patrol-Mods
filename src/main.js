@@ -18,6 +18,7 @@ let keyF, keyR, keyLEFT, keyRIGHT;
 
 // global streak variable
 let streak = 0;
+let songIsPlaying = false;
 
 //set UI sizes
 let borderUISize = game.config.height / 15;

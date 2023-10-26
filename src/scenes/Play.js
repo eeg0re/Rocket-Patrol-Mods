@@ -79,14 +79,14 @@ class Play extends Phaser.Scene {
             this.gameOver = true;
         }, null, this); 
         */
+
        this.clock = this.time.addEvent({
             delay: game.settings.gameTimer, 
-            callback: this.decreaseTime(),
-            callbackScope: this,
-            repeat: 60
+            // callback: this.decreaseTime(),
+            // callbackScope: this,
+            // loop: true
        });
-
-// new code -------------------------------------------------------------------------------------------------------------------------------------
+       
         // Display time
         let timeConfig = {
             fontFamily: 'Courier',
@@ -100,7 +100,8 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100
         }
-        // this.timeLeft = this.add.text(borderUISize + borderPadding*15, borderUISize + borderPadding*2, this.clock.number, timeConfig);
+        this.elapsed = this.clock.getElapsed();
+        this.timeLeft = this.add.text(borderUISize + borderPadding*15, borderUISize + borderPadding*2, this.elapsed, timeConfig);
 
         // Display streak 
         let streakConfig = {
@@ -115,9 +116,8 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 150
         }
-
+         
         this.streakText = this.add.text(borderUISize + borderPadding*30, borderUISize + borderPadding*2, "STREAK: " + streak, streakConfig)
-// end new code ---------------------------------------------------------------------------------------------------------------------------------
 
     }
 
@@ -146,7 +146,8 @@ class Play extends Phaser.Scene {
             this.ship03.update();
 
             // time updating
-            //this.timeLeft.text = this.clock.number;
+            this.elapsed = this.clock.getElapsed();
+            this.timeLeft.text = this.elapsed;
 
             // streak updating
             this.streakText.text = "STREAK: " + streak;
