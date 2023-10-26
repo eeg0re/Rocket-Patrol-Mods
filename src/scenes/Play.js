@@ -7,8 +7,6 @@ class Play extends Phaser.Scene {
         // load images/tile sprites
         this.load.image('rocket', './assets/rocket.png');
         this.load.image('spaceship', './assets/spaceship.png');
-        //this.load.image('spaceship', './assets/Nairan - Battlecruiser - Base.png');
-
         this.load.image('starfield', './assets/starfield.png');
 
         // load spritesheet
@@ -82,10 +80,13 @@ class Play extends Phaser.Scene {
 
        this.clock = this.time.addEvent({
             delay: game.settings.gameTimer, 
-            // callback: this.decreaseTime(),
-            // callbackScope: this,
-            // loop: true
-       });
+            callback: () => {
+                this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER',
+                scoreConfig). setOrigin(0.5);
+                this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press (R) to Restart or <- for Menu', scoreConfig).setOrigin(0.5);
+                this.gameOver = true;
+                }
+        });
        
         // Display time
         let timeConfig = {
@@ -114,18 +115,19 @@ class Play extends Phaser.Scene {
                 top: 5,
                 bottom: 5,
             },
-            fixedWidth: 150
+            fixedWidth: 160
         }
          
         this.streakText = this.add.text(borderUISize + borderPadding*30, borderUISize + borderPadding*2, "STREAK: " + streak, streakConfig)
 
     }
 
-    decreaseTime(){
-        game.settings.gameTimer -= 1;
-    }
-
     update(){
+        // if(this.timeRemaining == 0){
+        //     //this.endGame();
+        //     this.gameOver = false;
+        // }
+
         // check key input for restart
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyR)){
             this.scene.restart();
@@ -147,17 +149,17 @@ class Play extends Phaser.Scene {
 
             // time updating
             this.elapsed = this.clock.getElapsed();
-            this.remaining = (this.game.settings.gameTimer - this.elapsed)/1000; 
-            this.timeLeft.text = this.remaining;
+            this.timeRemaining = (this.game.settings.gameTimer - this.elapsed)/1000; 
+            this.timeLeft.text = this.timeRemaining;
 
             // streak updating
             this.streakText.text = "STREAK: " + streak;
 
             // if(streak % 7 == 3){ // spawn power up 1
-            //     spawnPower();
+            //     spawnPower("airControl");
             // } 
             // if(streak % 7 == 6){ // spawn power up 2
-            //     spawnPower();
+            //     spawnPower("bigBoy");
             // }
         }
 
@@ -207,8 +209,12 @@ class Play extends Phaser.Scene {
         this.scoreLeft.text = this.p1Score;
         this.sound.play('sfx_explosion');
         // add time & repaint 
-
+        
         // add streak and repaint
         streak += 1;
     }
+
+    /*spawnPower(powerType){
+        
+    }*/
 }
